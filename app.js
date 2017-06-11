@@ -1,9 +1,8 @@
 var express = require('express');
 var app = express();
-
+//解析xml必须
 var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+require('body-parser-xml')(bodyParser);
 
 var sha1 = require('sha1');
 
@@ -12,9 +11,6 @@ const request = require('request');
 const qs = require('querystring');
 const fs = require('fs');
 
-var getRawBody = require('raw-body');
-
-require('body-parser-xml')(bodyParser);
 //解析xml
 app.use(bodyParser.xml({
     limit: '1MB',
@@ -40,13 +36,11 @@ app.all('*', function (req, res) {
     console.log(22222);
     console.log(22222);
     console.log(22222);
-    console.log(req.body);
     console.log(req.body.xml);
-    console.log(req.xml);
     //设置返回数据header
     res.writeHead(200, {'Content-Type': 'application/xml'});
     //关注后回复
-    if (req.body.xml.event === 'subscribe') {
+    if (req.body.xml.event && req.body.xml.event === 'subscribe') {
         var resMsg = autoReply('text', req.body.xml, '欢迎关注');
         res.end(resMsg);
     } else {
