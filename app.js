@@ -33,7 +33,7 @@ app.all('*', function (req, res, next) {
     console.log(22222);
     console.log(this);
     console.log(getRawBody);
-    var data = yield getRawBody(req, {
+    var data =  getRawBody(req, {
         length: this.length,
         limit: '1mb',
         encoding: this.charset
