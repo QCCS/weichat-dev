@@ -17,6 +17,11 @@ var config = {
 app.get('/', function (req, res) {
     console.log(req.query);
 
+
+
+
+
+
     //这三个加密生成签名
      var token = config.weichat.token;
      var nonce = req.query.nonce;
@@ -26,7 +31,7 @@ app.get('/', function (req, res) {
 
      var echostr = req.query.echostr;
 
-     var str = [token, timestamp, nonce].sort().join();
+     var str = [token, timestamp, nonce].sort().join('');
      var sha = sha1(str);
 
     console.log(req.method);
