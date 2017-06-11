@@ -84,7 +84,11 @@ const saveToken = function () {
         let token = res['access_token'];
         console.log(token)
         fs.writeFile('./token', token, function (err) {
-            console.log("保存token出错:"+err)
+            if(err){
+                console.log("保存token出错:"+err)
+            }else {
+                console.log("保存成功")
+            }
         });
     })
 };
@@ -100,7 +104,9 @@ const refreshToken = function () {
 refreshToken();
 
 //token
-//const token = fs.readFileSync('./token').toString();
+const token = fs.readFileSync('./token').toString();
+console.lohg("读取的token:"+token);
+
 
 var server = app.listen(80, function () {
     var host = server.address().address;
