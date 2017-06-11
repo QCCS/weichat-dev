@@ -1,0 +1,22 @@
+{
+  "name": "webchat-dev",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QCCS/weichat-dev.git"
+  },
+  "keywords": [
+    "weichat"
+  ],
+  "author": "zhouli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/QCCS/weichat-dev/issues"
+  },
+  "homepage": "https://github.com/QCCS/weichat-dev#readme"
+}
