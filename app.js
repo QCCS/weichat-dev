@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
 
      var echostr = req.query.echostr;
 
-     var str = [token, timestamp, nonce].sort().json()
+     var str = [token, timestamp, nonce].sort().join();
      var sha = sha1(str);
 
 
