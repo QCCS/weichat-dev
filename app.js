@@ -12,7 +12,7 @@ const request = require('request');
 const qs = require('querystring');
 const fs = require('fs');
 
-
+var getRawBody = require('raw-body');
 
 var config = {
     weichat: {
@@ -25,6 +25,16 @@ app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     console.log(1);
     console.log(req);
+
+    var data = getRawBody(req, {
+        length: this.length,
+        limit: '1mb',
+        encoding: this.charset
+    });
+
+    console.log(data);
+
+    
     next();
 });
 
