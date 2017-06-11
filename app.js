@@ -24,13 +24,14 @@ var config = {
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     console.log(1);
-    console.log(req);
+    console.log(req.rawBody);
     console.log(22222);
     console.log(22222);
     console.log(22222);
     console.log(22222);
     console.log(22222);
     console.log(22222);
+
     console.log(this);
     console.log(getRawBody);
     var data =  getRawBody(req, {
