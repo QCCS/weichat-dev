@@ -31,6 +31,8 @@ app.all('*', function (req, res, next) {
     console.log(22222);
     console.log(22222);
     console.log(22222);
+    console.log(this);
+    console.log(getRawBody);
     var data = yield getRawBody(req, {
         length: this.length,
         limit: '1mb',
@@ -41,7 +43,7 @@ app.all('*', function (req, res, next) {
     console.log(222223);
     console.log(222223);
     console.log(222223);
-    console.log(222223);
+
     console.log(data.toString());
 
 
