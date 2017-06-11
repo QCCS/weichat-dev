@@ -15,7 +15,6 @@ var config = {
 }
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
     console.log(req.query);
 
     //这三个加密生成签名
@@ -30,7 +29,9 @@ app.get('/', function (req, res) {
      var str = [token, timestamp, nonce].sort().join();
      var sha = sha1(str);
 
-
+    console.log(req.method);
+    console.log("sha"+sha);
+    console.log("signature"+signature);
     if (req.method == 'GET') {
         if (sha == signature) {
             res.send(echostr+'')
