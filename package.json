@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/QCCS/weichat-dev#readme",
   "devDependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.3"
   }
 }

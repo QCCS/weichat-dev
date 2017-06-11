@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 var config = {
     weichat: {
@@ -11,9 +14,12 @@ var config = {
 }
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
-    console.log(req);
-
+//    res.send('Hello World!');
+    console.log(req.query);
+console.log("aaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaa");
     //这三个加密生成签名
     // var token = config.weichat.token;
     // var nonce = this.query.nonce;
