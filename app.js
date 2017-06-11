@@ -21,7 +21,13 @@ var config = {
         token: "qianchaochushui"
     }
 }
-//https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    console.log(1);
+    console.log(req);
+    next();
+});
+
 app.get('/', function (req, res) {
     console.log(req.query);
     //这三个加密生成签名
@@ -47,6 +53,8 @@ app.get('/', function (req, res) {
         if (sha != signature) {
             return;
         }
+        console.log(2);
+        console.log(req);
         next();
     }
 
@@ -87,7 +95,7 @@ const saveToken = function () {
             if(err){
                 console.log("保存token出错:"+err)
             }else {
-                console.log("保存成功")
+                console.log("保存成功");
             }
         });
     })
@@ -101,7 +109,7 @@ const refreshToken = function () {
 };
 
 //获取token
-refreshToken();
+//refreshToken();
 
 //token
 const token = fs.readFileSync('./token').toString();
