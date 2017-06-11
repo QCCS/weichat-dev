@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/QCCS/weichat-dev/issues"
   },
-  "homepage": "https://github.com/QCCS/weichat-dev#readme"
+  "homepage": "https://github.com/QCCS/weichat-dev#readme",
+  "devDependencies": {
+    "express": "^4.15.3"
+  }
 }

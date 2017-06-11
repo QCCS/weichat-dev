@@ -1,25 +1,41 @@
-/**
- * Created by zhouli on 2017/6/11.
- */
-'use strict'
+var express = require('express');
+var app = express();
 
-var Koa = require('koa');
-var sha1 = require('sha1');
 
 var config = {
     weichat: {
-        appID: "11",
-        appSecret: "aa",
-        token: "aa"
+        appID: "wxf175b5f24b6348c4",
+        appSecret: "bd2ec5dfe5320967d0132ed2e935faf1",
+        token: "qianchaochushui"
     }
 }
 
+app.get('/', function (req, res) {
+    res.send('Hello World!');
+    console.log(req);
 
-var app = new Koa();
+    //这三个加密生成签名
+    // var token = config.weichat.token;
+    // var nonce = this.query.nonce;
+    // var timestamp = this.query.timestamp;
+    // //微信生成的签名
+    // var signature = this.query.signature;
+    //
+    // var echostr = this.query.echostr;
+    //
+    // var str = [token, timestamp, nonce].sort().json()
+    // var sha = sha1(str);
+    // if (sha === signature) {
+    //     this.body = echostr + "";
+    // } else {
+    //     this.body = 'wrong';
+    // }
 
-app.use(function *(next) {
-    console.log(this.query)
 });
 
-app.listen(1234);
-console.log("Listening: 1234");
+var server = app.listen(80, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log('Example app listening at http://%s:%s', host, port);
+});
