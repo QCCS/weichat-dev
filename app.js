@@ -100,7 +100,7 @@ const refreshToken = function () {
 refreshToken();
 
 //token
-const token = fs.readFileSync('./token').toString();
+//const token = fs.readFileSync('./token').toString();
 
 var server = app.listen(80, function () {
     var host = server.address().address;
