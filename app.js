@@ -39,7 +39,8 @@ app.all('*', function (req, res) {
     } else {
         console.log(req.body.xml.content);
         var info = (req.body.xml.content);
-        res.end(info);
+        var resMsg = autoReply('text', req.body.xml, info);
+        res.end(resMsg);
     }
 
 });
