@@ -4,13 +4,14 @@ var app = express();
 var bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
 
+//加密对比验证
 var sha1 = require('sha1');
 
-
+//请求token
 const request = require('request');
 const qs = require('querystring');
+//保存token
 const fs = require('fs');
-
 //解析xml
 app.use(bodyParser.xml({
     limit: '1MB',
@@ -27,24 +28,18 @@ var config = {
         token: "qianchaochushui"
     }
 }
-app.all('*', function (req, res) {
 
-    console.log(req.body.xml);
-    //设置返回数据header
-    res.writeHead(200, {'Content-Type': 'application/xml'});
-    //关注后回复
-    if (req.body.xml.event && req.body.xml.event === 'subscribe') {
-        var resMsg = autoReply('text', req.body.xml, '欢迎关注,哈哈哈哈');
-        res.end(resMsg);
-    } else {
-        console.log(req.body.xml.content);
-        var info = (req.body.xml.content);
-        var resMsg = autoReply('text', req.body.xml, info);
-        res.end(resMsg);
-    }
 
-});
 
+
+
+
+
+//app.all('*', function (req, res) {
+//
+//});
+
+//验证服务器
 app.get('/', function (req, res) {
     console.log(req.query);
     //这三个加密生成签名
@@ -67,18 +62,24 @@ app.get('/', function (req, res) {
         }
     }
     else if(req.method == 'POST'){
-        if (sha != signature) {
-            return;
+        console.log(req.body.xml);
+        //设置返回数据header
+        res.writeHead(200, {'Content-Type': 'application/xml'});
+        //关注后回复
+        if (req.body.xml.event && req.body.xml.event === 'subscribe') {
+            var resMsg = autoReply('text', req.body.xml, '欢迎关注,我是机器人,你可以与我对话');
+            res.end(resMsg);
+        } else {
+            console.log(req.body.xml.content);
+            var info = (req.body.xml.content);
+            var resMsg = autoReply('text', req.body.xml, info);
+            res.end(resMsg);
         }
-        console.log(2);
-        console.log(req);
-        next();
     }
-
 });
 
 
-
+//自动回复模板
 function autoReply(msgType, requestData, info) {
     switch (msgType) {
         case 'text':
@@ -100,7 +101,6 @@ function autoReply(msgType, requestData, info) {
                 '<Content><![CDATA['+info+']]></Content>' +
                 '</xml>';
     }
-
     return resMsg;
 }
 
@@ -150,11 +150,11 @@ const refreshToken = function () {
 };
 
 //获取token
-//refreshToken();
+refreshToken();
 
 //token
-const token = fs.readFileSync('./token').toString();
-console.log("读取的token:"+token);
+//const token = fs.readFileSync('./token').toString();
+//console.log("读取的token:"+token);
 
 
 var server = app.listen(80, function () {
