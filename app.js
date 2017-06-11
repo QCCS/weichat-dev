@@ -6,6 +6,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 var sha1 = require('sha1');
+
+
+const request = require('request');
+const qs = require('querystring');
+const fs = require('fs');
+
+
+
 var config = {
     weichat: {
         appID: "wxf175b5f24b6348c4",
@@ -13,15 +21,9 @@ var config = {
         token: "qianchaochushui"
     }
 }
-
+//https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
 app.get('/', function (req, res) {
     console.log(req.query);
-
-
-
-
-
-
     //这三个加密生成签名
      var token = config.weichat.token;
      var nonce = req.query.nonce;
@@ -34,9 +36,6 @@ app.get('/', function (req, res) {
      var str = [token, timestamp, nonce].sort().join('');
      var sha = sha1(str);
 
-    console.log(req.method);
-    console.log("sha"+sha);
-    console.log("signature"+signature);
     if (req.method == 'GET') {
         if (sha == signature) {
             res.send(echostr+'')
@@ -52,6 +51,56 @@ app.get('/', function (req, res) {
     }
 
 });
+
+
+
+
+const getAccessToken = function () {
+    let queryParams = {
+        'grant_type': 'client_credential',
+        'appid': config.weichat.appID,
+        'secret': config.weichat.appSecret
+    };
+
+    let wxGetAccessTokenBaseUrl = 'https://api.weixin.qq.com/cgi-bin/token?'+qs.stringify(queryParams);
+    let options = {
+        method: 'GET',
+        url: wxGetAccessTokenBaseUrl
+    };
+    return new Promise((resolve, reject) => {
+        request(options, function (err, res, body) {
+            if (res) {
+                resolve(JSON.parse(body));
+            } else {
+                reject(err);
+            }
+        });
+    })
+};
+
+//保存token
+const saveToken = function () {
+    getAccessToken().then(res => {
+        let token = res['access_token'];
+        console.log(token)
+        fs.writeFile('./token', token, function (err) {
+            console.log("保存token出错:"+err)
+        });
+    })
+};
+//更新token
+const refreshToken = function () {
+    saveToken();
+    setInterval(function () {
+        saveToken();
+    }, 7000*1000);
+};
+
+//获取token
+refreshToken();
+
+//token
+const token = fs.readFileSync('./token').toString();
 
 var server = app.listen(80, function () {
     var host = server.address().address;
