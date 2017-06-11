@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+var sha1 = require('sha1');
 var config = {
     weichat: {
         appID: "wxf175b5f24b6348c4",
@@ -15,24 +16,34 @@ var config = {
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
-    console.log(req);
+    console.log(req.query);
 
     //这三个加密生成签名
-    // var token = config.weichat.token;
-    // var nonce = this.query.nonce;
-    // var timestamp = this.query.timestamp;
-    // //微信生成的签名
-    // var signature = this.query.signature;
-    //
-    // var echostr = this.query.echostr;
-    //
-    // var str = [token, timestamp, nonce].sort().json()
-    // var sha = sha1(str);
-    // if (sha === signature) {
-    //     this.body = echostr + "";
-    // } else {
-    //     this.body = 'wrong';
-    // }
+     var token = config.weichat.token;
+     var nonce = req.query.nonce;
+     var timestamp = req.query.timestamp;
+     //微信生成的签名
+     var signature = req.query.signature;
+
+     var echostr = req.query.echostr;
+
+     var str = [token, timestamp, nonce].sort().json()
+     var sha = sha1(str);
+
+
+    if (req.method == 'GET') {
+        if (sha == signature) {
+            res.send(echostr+'')
+        }else{
+            res.send('err');
+        }
+    }
+    else if(req.method == 'POST'){
+        if (sha != signature) {
+            return;
+        }
+        next();
+    }
 
 });
 
