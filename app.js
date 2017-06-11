@@ -83,7 +83,7 @@ const saveToken = function () {
     getAccessToken().then(res => {
         let token = res['access_token'];
         console.log(token)
-        fs.writeFile('token', token, function (err) {
+        fs.writeFile('./token', token, function (err) {
             console.log("保存token出错:"+err)
         });
     })
@@ -100,7 +100,7 @@ const refreshToken = function () {
 refreshToken();
 
 //token
-//const token = fs.readFileSync('token').toString();
+//const token = fs.readFileSync('./token').toString();
 
 var server = app.listen(80, function () {
     var host = server.address().address;
