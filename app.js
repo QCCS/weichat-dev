@@ -14,7 +14,6 @@ const fs = require('fs');
 
 var getRawBody = require('raw-body');
 
-const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
 //解析xml
 app.use(bodyParser.xml({
