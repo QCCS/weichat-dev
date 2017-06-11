@@ -1,7 +1,9 @@
 var express = require('express');
 var app = express();
 
-
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 var config = {
     weichat: {
         appID: "wxf175b5f24b6348c4",
@@ -14,22 +16,22 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
     console.log(req);
 
-    //这三个加密生成签名
-    // var token = config.weichat.token;
-    // var nonce = this.query.nonce;
-    // var timestamp = this.query.timestamp;
-    // //微信生成的签名
-    // var signature = this.query.signature;
-    //
-    // var echostr = this.query.echostr;
-    //
-    // var str = [token, timestamp, nonce].sort().json()
-    // var sha = sha1(str);
-    // if (sha === signature) {
-    //     this.body = echostr + "";
-    // } else {
-    //     this.body = 'wrong';
-    // }
+     //这三个加密生成签名
+     var token = config.weichat.token;
+     var nonce = req.query.nonce;
+     var timestamp = req.query.timestamp;
+     //微信生成的签名
+     var signature = req.query.signature;
+
+     var echostr = req.query.echostr;
+
+     var str = [token, timestamp, nonce].sort().json()
+     var sha = sha1(str);
+     if (sha === signature) {
+         this.body = echostr + "";
+     } else {
+         this.body = 'wrong';
+     }
 
 });
 
