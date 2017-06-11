@@ -31,6 +31,9 @@ app.all('*', function (req, res, next) {
     console.log(22222);
     console.log(22222);
     console.log(22222);
+    console.log(req.body);
+    console.log(req.body.xml);
+
     //设置返回数据header
     res.writeHead(200, {'Content-Type': 'application/xml'});
     //关注后回复
