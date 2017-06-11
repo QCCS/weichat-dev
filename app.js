@@ -21,8 +21,7 @@ var config = {
         token: "qianchaochushui"
     }
 }
-app.all('*', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
+app.post('/', function (req, res) {
     console.log(1);
 
     console.log(22222);
@@ -56,10 +55,6 @@ app.all('*', function (req, res, next) {
     console.log(222223);
     console.log(222223);
 
-
-
-
-    next();
 });
 
 app.get('/', function (req, res) {
