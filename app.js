@@ -1,5 +1,4 @@
 var express = require('express');
-const router =require('express').Router();
 var app = express();
 
 var bodyParser = require('body-parser');
@@ -15,6 +14,17 @@ const fs = require('fs');
 
 var getRawBody = require('raw-body');
 
+const bodyParser = require('body-parser');
+require('body-parser-xml')(bodyParser);
+//解析xml
+app.use(bodyParser.xml({
+    limit: '1MB',
+    xmlParseOptions: {
+        normalize: true,
+        normalizeTags: true,
+        explicitArray: false
+    }
+}));
 var config = {
     weichat: {
         appID: "wxf175b5f24b6348c4",
@@ -22,7 +32,7 @@ var config = {
         token: "qianchaochushui"
     }
 }
-router.post('/', function (req, res) {
+app.all('*', function (req, res) {
     console.log(1);
 
     console.log(22222);
@@ -33,7 +43,7 @@ router.post('/', function (req, res) {
     console.log(22222);
     console.log(req.body);
     console.log(req.body.xml);
-
+    console.log(req.xml);
     //设置返回数据header
     res.writeHead(200, {'Content-Type': 'application/xml'});
     //关注后回复
@@ -51,6 +61,7 @@ router.post('/', function (req, res) {
     console.log(222223);
     console.log(222223);
     console.log(222223);
+
 
 });
 
