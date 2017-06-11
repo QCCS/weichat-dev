@@ -1,4 +1,5 @@
 var express = require('express');
+const router =require('express').Router();
 var app = express();
 
 var bodyParser = require('body-parser');
@@ -21,7 +22,7 @@ var config = {
         token: "qianchaochushui"
     }
 }
-app.post('/', function (req, res) {
+router.post('/', function (req, res) {
     console.log(1);
 
     console.log(22222);
@@ -41,11 +42,7 @@ app.post('/', function (req, res) {
         res.end(resMsg);
     } else {
         var info = encodeURI(req.body.xml.content);
-        turingRobot(info).then(function (data) {
-            var response = JSON.parse(data);
-            var resMsg = autoReply('text', req.body.xml, response.text);
-            res.end(resMsg);
-        })
+        res.end(info);
     }
 
 
