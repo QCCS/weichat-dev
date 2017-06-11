@@ -25,16 +25,26 @@ app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     console.log(1);
     console.log(req);
-
+    console.log(22222);
+    console.log(22222);
+    console.log(22222);
+    console.log(22222);
+    console.log(22222);
+    console.log(22222);
     var data = getRawBody(req, {
         length: this.length,
         limit: '1mb',
         encoding: this.charset
     });
-
+    console.log(222223);
+    console.log(222223);
+    console.log(222223);
+    console.log(222223);
+    console.log(222223);
+    console.log(222223);
     console.log(data);
 
-    
+
     next();
 });
 
