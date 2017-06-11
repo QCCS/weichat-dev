@@ -35,9 +35,21 @@ var config = {
 
 
 
-//app.all('*', function (req, res) {
-//
-//});
+app.all('*', function (req, res) {
+    console.log(req.body.xml);
+    //设置返回数据header
+    res.writeHead(200, {'Content-Type': 'application/xml'});
+    //关注后回复
+    if (req.body.xml.event && req.body.xml.event === 'subscribe') {
+        var resMsg = autoReply('text', req.body.xml, '欢迎关注,我是机器人,你可以与我对话');
+        res.end(resMsg);
+    } else {
+        console.log(req.body.xml.content);
+        var info = (req.body.xml.content);
+        var resMsg = autoReply('text', req.body.xml, info);
+        res.end(resMsg);
+    }
+});
 
 //验证服务器
 app.get('/', function (req, res) {
@@ -62,18 +74,8 @@ app.get('/', function (req, res) {
         }
     }
     else if(req.method == 'POST'){
-        console.log(req.body.xml);
-        //设置返回数据header
-        res.writeHead(200, {'Content-Type': 'application/xml'});
-        //关注后回复
-        if (req.body.xml.event && req.body.xml.event === 'subscribe') {
-            var resMsg = autoReply('text', req.body.xml, '欢迎关注,我是机器人,你可以与我对话');
-            res.end(resMsg);
-        } else {
-            console.log(req.body.xml.content);
-            var info = (req.body.xml.content);
-            var resMsg = autoReply('text', req.body.xml, info);
-            res.end(resMsg);
+        if (sha != signature) {
+            return;
         }
     }
 });
