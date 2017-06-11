@@ -42,7 +42,7 @@ app.all('*', function (req, res, next) {
     console.log(222223);
     console.log(222223);
     console.log(222223);
-    console.log(data);
+    console.log(data.toString());
 
 
     next();
