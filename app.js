@@ -105,7 +105,7 @@ refreshToken();
 
 //token
 const token = fs.readFileSync('./token').toString();
-console.lohg("读取的token:"+token);
+console.log("读取的token:"+token);
 
 
 var server = app.listen(80, function () {
